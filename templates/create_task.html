@@ -1,0 +1,21 @@
+{% extends 'navbar.html' %}
+{% block content %}
+
+{% if user.is_authenticated %}    
+    <body>
+        <form action="" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" name="Create" value="Crate Task">
+        </form>
+    </body>
+{% else %}    
+    <h1>
+        You can't create a task
+    </h1>
+    <p>
+            Please, Login to create a task
+    </p>
+{% endif %}    
+
+{% endblock %}
