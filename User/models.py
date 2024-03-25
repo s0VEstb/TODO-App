@@ -10,7 +10,8 @@ class Profile(models.Model):
     age = models.IntegerField()
 
     def __str__(self):
-        return self.user.username if self.user else "Profile"
+        return self.user.username
+
 
 
 class SMScode(models.Model):
@@ -19,4 +20,4 @@ class SMScode(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.user.username if self.user else "Profile"
+        return self.user.username

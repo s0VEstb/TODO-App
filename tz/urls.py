@@ -1,9 +1,10 @@
-
+from django.conf import settings
+from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path
 from TaskManager.models import Task, Status
 from TaskManager.views import (main_page_view, task_page_view, task_detail_view,
-                               create_task_view, delete_task_view)
+                               create_task_view, delete_task_view, update_task_view)
 from User.views import register_view, confirm_sms_view, login_view, profile_view, logout_view
 
 
@@ -14,6 +15,7 @@ urlpatterns = [
     path('tasks/<int:task_id>/', task_detail_view),
     path('create_task/', create_task_view),
     path('tasks/<int:task_id>/delete', delete_task_view),
+    path('tasks/<int:task_id>/update', update_task_view),
 
 
     path('register/', register_view),
@@ -21,4 +23,4 @@ urlpatterns = [
     path('login/', login_view),
     path('profile/', profile_view),
     path('logout/', logout_view),
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

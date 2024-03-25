@@ -1,18 +1,20 @@
 {% extends 'navbar.html' %}
 {% block content %}
-    <h1>{{ task.title }}</h1>
-    <h2>{{ task.status }}</h2>
-     <form action="" method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <input type="submit" name="Create" value="Обновить">
-    </form>
-    <p>{{ task.description }}</p>
+    <h1>Tittle: {{ task.title }}</h1>
+    <h2>Status: {{ task.status }}</h2>
+    {% if task.user == request.user %}
+        <p>Update: 
+        <a href="/tasks/{{ task.id }}/update">Update</a>
+        </p>
+    {% endif %}
+    
+    <h2>Task Description: </h2> <p>{{ task.description }}</p>
+ 
     <h6>{{ task.created_at }}</h6>
-    
-    <form action="/tasks/{{ task.id }}/delete" method="post">
-    {% csrf_token %}
-    <input type="submit" value="Delete" onclick="return confirm('Are you sure you want to delete this task?');">
-  </form>
-    
+    {% if task.user == request.user %}
+        <form action="/tasks/{{ task.id }}/delete" method="post">
+            {% csrf_token %}
+            <input type="submit" value="Delete" onclick="return confirm('Are you sure you want to delete this task?');">
+        </form>
+    {% endif %}
 {% endblock %}

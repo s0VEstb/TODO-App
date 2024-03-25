@@ -2,7 +2,7 @@
 {% block content %}
     <h1>Profile</h1>
     <p>
-        <img src="/media/ {{ user.profile.image }}" alt="">
+        <img src="/media/{{ user.profile.image }}" alt="" width="400" height="300">
     </p>
     <p>
         Welcome to your profile, {{ user.username }}
@@ -14,10 +14,10 @@
         {{ user.first_name }}, {{ user.last_name }}
     </p>
     <p>
-        Age: {{ user.age }}
+        Age: {{ user.profile.age }}
     </p>
     <p>
-        Bio: {{ user.bio }}
+        Bio: {{ user.profile.bio }}
     </p>
     
     

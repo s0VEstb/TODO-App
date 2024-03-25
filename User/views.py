@@ -75,6 +75,7 @@ def confirm_sms_view(request):
         code.user.is_active = True
         code.user.save()
         code.delete()
+        login(request, user=code.user)
 
         return redirect("/tasks")
 
@@ -102,17 +103,18 @@ def login_view(request):
         return redirect("/tasks")
 
 
-@login_required
+@login_required(login_url='/login/')
 def profile_view(request):
     if request.method == 'GET':
         tasks = request.user.tasks.all()
         print(tasks)
+        print(request.user.profile.image)
         return render(request,
                       'user_handler/profile.html',
                       {'tasks': tasks})
 
 
-@login_required
+@login_required(login_url='/login/')
 def logout_view(request):
     logout(request)
     return redirect('/tasks/')
