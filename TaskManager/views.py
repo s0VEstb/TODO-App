@@ -12,10 +12,52 @@ def main_page_view(request):
 
 def task_page_view(request):
     if request.method == 'GET':
+
+        search = request.GET.get("search")
+        status_id = request.GET.get("status")
+        sort = request.GET.get("sort")
+        page = request.GET.get("page", 1)
+        page = request.GET.get("page", 1)
+
         tasks = Task.objects.all()
+        status = Status.objects.all()
+
+        limit = 6
+        max_pages = len(tasks) / limit
+        if max_pages != 0:
+            max_pages = int(max_pages) + 1
+        pages = [i for i in range(1, max_pages + 1)]
+
+        start = (int(page) - 1) * limit
+        end = start + limit
+
+        if search:
+            tasks = tasks.filter(
+                Q(name__icontains=search) |
+                Q(content__icontains=search) |
+                Q(category__name__icontains=search) |
+                Q(catalog__name__icontains=search)
+            )
+        if status_id:
+            tasks = tasks.filter(
+                status=status_id
+            )
+
+        if sort == "newest":
+            tasks = tasks.order_by("-created_at")
+            print(tasks)
+
+        if sort == "oldest":
+            tasks = tasks.order_by("created_at")
+
+        tasks = tasks[start:end]
+
+
         return render(request,
                       'tasks.html',
-                      context={'tasks': tasks})
+                      context={'tasks': tasks,
+                               'pages': pages,
+                               'status': status})
 
 
 def task_detail_view(request, task_id):

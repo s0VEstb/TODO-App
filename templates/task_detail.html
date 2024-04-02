@@ -11,6 +11,7 @@
     <h2>Task Description: </h2> <p>{{ task.description }}</p>
  
     <h6>{{ task.created_at }}</h6>
+    
     {% if task.user == request.user %}
         <form action="/tasks/{{ task.id }}/delete" method="post">
             {% csrf_token %}

@@ -107,8 +107,6 @@ def login_view(request):
 def profile_view(request):
     if request.method == 'GET':
         tasks = request.user.tasks.all()
-        print(tasks)
-        print(request.user.profile.image)
         return render(request,
                       'user_handler/profile.html',
                       {'tasks': tasks})

@@ -1,5 +1,21 @@
 {% extends 'navbar.html' %}
 {% block content %}
+    
+<body>
+<form action="" method="get">
+    <input type="text" name="search" placeholder="Search" value="{{ request.GET.search }}">
+    <input type="submit" value="Search">
+</form>
+
+{% for i in status %}
+    <a href="?status={{ i.id }}" class="btn btn-secondary">{{ i.title }}</a>
+{% endfor %}
+<h2>
+    Sort by:
+</h2>
+<a href="?sort=newest" class="btn btn-secondary">Newest</a>
+<a href="?sort=oldest" class="btn btn-secondary">Oldest</a>
+    
 <div class="card-container">
   {% for task in tasks %}
     <div class="card border-info mb-4" style="max-width: 35rem; margin-right: 40px;">
@@ -12,7 +28,14 @@
       </div>
     </div>
   {% endfor %}
+
+    {% for i in pages %}
+        <a href="?page={{i}}" class="btn btn-secondary">{{i}}</a>
+    {% endfor %}
+
 </div>
+</body>
+    
 <style>
   .card-container {
     display: flex;
